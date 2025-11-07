@@ -9,6 +9,8 @@ import BannerMaster from './Admin/BannerMaster';
 import CategoryMaster from './Admin/CategoryMaster';
 import SubcategoryMaster from './Admin/SubcategoryMaster';
 import ProductMaster from './Admin/ProductMaster';
+import FIBCMaster from './Admin/FIBCMaster';
+import TarpaulinMaster from './Admin/TarpaulinMaster';
 
 // User imports
 import ProductSlider from './User/ProductSlider';
@@ -24,6 +26,7 @@ import ProductDetailPage from './User/Components/ProductDetailPage';
 import FibcSoln from './User/FibcSoln';
 import ScrollToTop from './User/Components/ScrollToTop';
 import WhatsAppIcon from './User/Components/WhatsAppIcon';
+
 
 function AppContent() {
   const location = useLocation();
@@ -52,6 +55,8 @@ function AppContent() {
           <Route path="banner" element={<BannerMaster />} />
           <Route path="category" element={<CategoryMaster />} />
           <Route path="subcategory" element={<SubcategoryMaster />} />
+          <Route path="fibc" element={<FIBCMaster />} />
+          <Route path="tarpaulin" element={<TarpaulinMaster />} />
           <Route path="product" element={<ProductMaster />} />
           <Route path="product-slider" element={<ProductSlider />} />
         </Route>

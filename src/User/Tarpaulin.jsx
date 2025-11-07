@@ -1,44 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import httpClient from '../Api/axios';
 
 function Tarpaulin() {
-  const products = [
-    {
-      id: 1,
-      name: "Heavy-Duty PVC Coated Tarpaulin",
-      description: "High-strength, waterproof, and UV-resistant tarpaulin ideal for industrial, transportation, and agricultural applications.",
-      image: "/Assets/vision1.jpg"
-    },
-    {
-      id: 2,
-      name: "PVC Truck Cover Tarpaulin",
-      description: "Designed for safe and secure protection of goods during transport.",
-      image: "/Assets/vision2.jpg"
-    },
-    {
-      id: 3,
-      name: "PVC Water Storage Tank Sheet",
-      description: "Durable PVC fabric for collapsible tanks and storage systems.",
-      image: "/Assets/vision3.jpg"
-    },
-    {
-      id: 4,
-      name: "PVC Pond Liner / Biofloc Fish Tank",
-      description: "Used for aquaculture, fish farming, and water storage tanks.",
-      image: "/Assets/vision4.jpg"
-    },
-    {
-      id: 5,
-      name: "PVC Industrial Cover",
-      description: "Protects machinery, construction materials, and industrial goods.",
-      image: "/Assets/vision5.png"
-    },
-    {
-      id: 6,
-      name: "PVC Tarpaulin Rolts",
-      description: "Available in various GSM, colors, and widths for custom fabrication and multiple industrial uses.",
-      image: "/Assets/vision6.jpg"
-    }
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTarpaulins = async () => {
+      try {
+        setLoading(true);
+        const response = await httpClient.get('/getAllTarpaulin');
+
+        // Transform API data to match your component structure
+        const transformedProducts = response.data.map(item => ({
+          id: item._id,
+          name: item.tarpaulin_title,
+          description: item.tarpaulin_description,
+          image: item.tarpaulin_image
+        }));
+
+        setProducts(transformedProducts);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load products. Please try again later.');
+        console.error('Error fetching tarpaulins:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTarpaulins();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-8 px-4 sm:px-6 lg:px-8 mt-16 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-8 px-4 sm:px-6 lg:px-8 mt-16 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 text-lg mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-8 px-4 sm:px-6 lg:px-8 mt-16">
@@ -46,7 +68,7 @@ function Tarpaulin() {
         {/* Enhanced Header Section */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4">
-            
+
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Popular <span className="text-red-600">PVC Tarpaulin</span> Products
@@ -73,7 +95,10 @@ function Tarpaulin() {
                     className="w-full h-40 object-contain transition-transform duration-500 group-hover:scale-110 filter drop-shadow-lg"
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      // Check if nextSibling exists before accessing it
+                      if (e.target.nextSibling) {
+                        e.target.nextSibling.style.display = 'flex';
+                      }
                     }}
                   />
                   {/* Fallback if image doesn't load */}
@@ -94,11 +119,18 @@ function Tarpaulin() {
                   {product.description}
                 </p>
               </div>
-              
+
               {/* Removed the hover border effect div */}
             </div>
           ))}
         </div>
+
+        {/* Show message if no products found */}
+        {products.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No products found.</p>
+          </div>
+        )}
       </div>
     </div>
   );

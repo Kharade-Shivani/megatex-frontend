@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Settings, ChevronRight, Menu, X, Image, Package, FolderTree, ListTree } from 'lucide-react';
+import { Home, Settings, ChevronRight, Menu, X, Image, Package, FolderTree, ListTree, Box, Layers } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -35,22 +35,34 @@ const Sidebar = () => {
       path: '/admin/banner'
     },
     {
-  id: 'category',
-  label: 'Category Master',
-  icon: FolderTree,
-  path: '/admin/category'
-},
-{
-  id: 'subcategory',
-  label: 'Subcategory Master',
-  icon: ListTree,
-  path: '/admin/subcategory'
-},
+      id: 'category',
+      label: 'Category Master',
+      icon: FolderTree,
+      path: '/admin/category'
+    },
+    {
+      id: 'subcategory',
+      label: 'Subcategory Master',
+      icon: ListTree,
+      path: '/admin/subcategory'
+    },
     {
       id: 'product',
       label: 'Product Master',
       icon: Package,
       path: '/admin/product'
+    },
+    {
+      id: 'fibc',
+      label: 'FIBC Master',
+      icon: Box,
+      path: '/admin/fibc'
+    },
+    {
+      id: 'tarpaulin',
+      label: 'Tarpaulin Master',
+      icon: Layers,
+      path: '/admin/tarpaulin'
     }
   ];
 
@@ -200,20 +212,7 @@ const Sidebar = () => {
           })}
         </nav>
 
-        {/* Footer */}
-        {(!isCollapsed || isMobile) && (
-          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-green-700">
-            <div className="flex items-center space-x-3 p-3 rounded-lg bg-green-800 hover:bg-green-700 transition-colors cursor-pointer">
-              <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-green-500 rounded-full flex items-center justify-center shadow">
-                <Settings className="w-4 h-4" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Megatex Admin</p>
-                <p className="text-xs text-green-300">megatex@gmail.com</p>
-              </div>
-            </div>
-          </div>
-        )}
+       
       </div>
 
       {/* Main Content */}

@@ -62,7 +62,7 @@ function Footer() {
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <img 
-                  src="/Assets/logo.png" 
+                  src="/Assets/logo.jpg" 
                   alt="Megatex Protective Fabrics" 
                   className="h-12 w-auto sm:h-14 lg:h-16 object-contain" 
                 />

@@ -30,7 +30,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <img 
-                src="/Assets/logo.png" 
+                src="/Assets/logo.jpg" 
                 alt="Megatex Protective Fabrics" 
                 className="h-10 w-auto sm:h-12 lg:h-14 object-contain" // Reduced logo size
               />
